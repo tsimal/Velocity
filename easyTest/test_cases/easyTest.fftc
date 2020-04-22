@@ -18,13 +18,16 @@
                         <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                     </applicationProperties>
                 </item>
-                <item guid="e9aead79-9c25-444e-903d-9c5aca015b00" action="NetworkDetails" session="s1" useFieldsInCommand="false">
+                <item guid="e9aead79-9c25-444e-903d-9c5aca015b00" action="command" session="s1" responseMap="project://easyTest/response_maps/ip_a_l.ffrm" useResponseMapLibraryApplicability="false">
+                    <command>
+                        <body>ip a l</body>
+                    </command>
                     <postProcessing>
                         <analysisRules>
                             <item>
                                 <extractorInfo extractorType="query">
                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>adapters()</query>
+                                        <query>countInterfaces()</query>
                                     </extractorProperties>
                                 </extractorInfo>
                                 <processorInfo ruleType="message">
@@ -37,12 +40,12 @@
                             <item>
                                 <extractorInfo extractorType="query">
                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>ipv4()</query>
+                                        <query>ipv4_address()</query>
                                     </extractorProperties>
                                 </extractorInfo>
                                 <processorInfo ruleType="message">
                                     <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                        <message>IPv4 count = &quot;{value}&quot;</message>
+                                        <message>IPv4 = &quot;{value}&quot;</message>
                                         <tag sub="false" defaultValue=""/>
                                     </ruleProperties>
                                 </processorInfo>
@@ -50,12 +53,12 @@
                             <item>
                                 <extractorInfo extractorType="query">
                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>ipv6()</query>
+                                        <query>ipv6_address()</query>
                                     </extractorProperties>
                                 </extractorInfo>
                                 <processorInfo ruleType="message">
                                     <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                        <message>IPv6 count = &quot;{value}&quot;</message>
+                                        <message>IPv6 = &quot;{value}&quot;</message>
                                         <tag sub="false" defaultValue=""/>
                                     </ruleProperties>
                                 </processorInfo>
@@ -63,8 +66,12 @@
                         </analysisRules>
                     </postProcessing>
                     <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                    <useResponseMapLibraryFromSession>false</useResponseMapLibraryFromSession>
                 </item>
-                <item guid="b87c7a4b-9126-4448-80ac-00b5afe513e5" action="OSDetails" session="s1" useFieldsInCommand="false">
+                <item guid="b87c7a4b-9126-4448-80ac-00b5afe513e5" action="command" session="s1" responseMap="project://easyTest/response_maps/lsb_release_-a.ffrm" useResponseMapLibraryApplicability="false">
+                    <command>
+                        <body>lsb_release -a</body>
+                    </command>
                     <postProcessing>
                         <analysisRules>
                             <item>
@@ -102,6 +109,7 @@
                         </analysisRules>
                     </postProcessing>
                     <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                    <useResponseMapLibraryFromSession>false</useResponseMapLibraryFromSession>
                 </item>
             </steps>
         </item>
