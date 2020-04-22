@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<testCase version="8.1.3.0">
+    <general>
+        <sessionClass includeTestCase="true" sessionType="project://easyTest/session_profiles/SSH_ref_session_profile.ffsp"/>
+    </general>
+    <testbed>project://Abs/topologies/abs.tbml</testbed>
+    <procedures>
+        <item name="main"/>
+        <item name="NetworkDetails" isPublic="true" isVBlock="true">
+            <steps>
+                <item guid="0ee9e077-64c8-4e1f-a176-c7055da11819" action="command" session="$session" normalOffset="4.114" estimatedStepExecutionTime="0.01">
+                    <command>
+                        <body>ip a l</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>countInterfaces()</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>var1</storageLocation>
+                                        <query>adapters</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>countIPv4()</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>var1</storageLocation>
+                                        <query>ipv4</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>countIPv6()</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>var1</storageLocation>
+                                        <query>ipv6</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="0.16" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+            </steps>
+            <response>{&quot;adapters&quot;:&quot;value&quot;,&quot;ipv4&quot;:&quot;value&quot;,&quot;ipv6&quot;:&quot;value&quot;}</response>
+        </item>
+        <item name="OSDetails" isPublic="true" isVBlock="true">
+            <steps>
+                <item guid="4749e9d2-edec-4097-9a26-72f5523e8a7a" action="command" session="$session" normalOffset="12.31" estimatedStepExecutionTime="0.07">
+                    <command>
+                        <body>lsb_release -a</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>version()</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>var1</storageLocation>
+                                        <query>OS</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="0.384" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+            </steps>
+            <response>{&quot;OS&quot;:&quot;value&quot;}</response>
+        </item>
+    </procedures>
+</testCase>

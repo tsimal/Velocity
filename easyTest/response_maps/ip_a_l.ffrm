@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<ResponseMap version="8.0.1.0">
+    <sampleDictionary>
+        <item name="sample1">
+            <action actionType="command">
+                <command>
+                    <body>ip a l</body>
+                </command>
+            </action>
+            <responseBody>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:d8:54:a0 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.0.105/24 brd 10.10.0.255 scope global dynamic ens33
+       valid_lft 251851sec preferred_lft 251851sec
+    inet6 fe80::1acb:a58c:7c33:366d/64 scope link 
+       valid_lft forever preferred_lft forever
+3: ens34: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:d8:54:aa brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.100/24 brd 192.168.56.255 scope global ens34
+       valid_lft forever preferred_lft forever
+    inet6 fe80::2ad9:5c2c:40e4:ef15/64 scope link 
+       valid_lft forever preferred_lft forever
+</responseBody>
+            <contentType>text</contentType>
+            <structuredData>
+&lt;structure xmlns:map=&quot;http://www.fnfr.com/svt/mapping&quot;&gt;
+    &lt;isEmpty&gt;false&lt;/isEmpty&gt;
+    &lt;responseLine&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1&lt;/responseLine&gt;
+    &lt;promptName&gt;prompt1&lt;/promptName&gt;
+    &lt;echo&gt;ip a l&lt;/echo&gt;
+    &lt;prompt&gt;tsimal@lubuntu:~$ &lt;/prompt&gt;
+&lt;/structure&gt;
+</structuredData>
+            <aliases>
+                <item name="isEmpty">
+                    <queryFormatString>.//isEmpty</queryFormatString>
+                </item>
+                <item name="responseLine">
+                    <queryFormatString>.//responseLine</queryFormatString>
+                </item>
+                <item name="promptName">
+                    <queryFormatString>.//promptName</queryFormatString>
+                </item>
+                <item name="echo">
+                    <queryFormatString>.//echo</queryFormatString>
+                </item>
+                <item name="prompt">
+                    <queryFormatString>.//prompt</queryFormatString>
+                </item>
+            </aliases>
+            <duration>0.2</duration>
+        </item>
+    </sampleDictionary>
+    <mapperProperties>
+        <item type="com.fnfr.svt.mapping.regex.RegexMapperProperties">
+            <regexMaps>
+                <item name="adapter">
+                    <groups>
+                        <item name="interfaceNumber">
+                            <regex>\\d+</regex>
+                            <named>true</named>
+                            <start>0</start>
+                            <end>1</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name="\w+">one or more word characters</item>
+                                <item name="([-+]?\d+\.?\d*([eE][-+]?\d+)?)">one complex decimal number</item>
+                                <item name="\d+">one or more digits</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor0">
+                            <regex>:\\s+</regex>
+                            <start>1</start>
+                            <end>3</end>
+                        </item>
+                        <item name="interfaceName">
+                            <regex>[^\\r\\n]+</regex>
+                            <named>true</named>
+                            <start>3</start>
+                            <end>5</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="[^0-9\r\n]+">one or more non-digit characters except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name="\w+">one or more word characters</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor1">
+                            <regex>:\\s+</regex>
+                            <start>5</start>
+                            <end>7</end>
+                        </item>
+                    </groups>
+                    <sampleMatch>1: lo: </sampleMatch>
+                    <regexMapMode>Line</regexMapMode>
+                </item>
+                <item name="ipv4">
+                    <groups>
+                        <item name="anchor0">
+                            <regex>inet\\s+</regex>
+                            <start>0</start>
+                            <end>5</end>
+                        </item>
+                        <item name="ipv4_address">
+                            <regex>((\\d+\\.)+\\d+)</regex>
+                            <named>true</named>
+                            <start>5</start>
+                            <end>14</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name="((\d+\.)+\d+)">one or more of digit and dots</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor1">
+                            <regex>/</regex>
+                            <start>14</start>
+                            <end>15</end>
+                        </item>
+                        <item name="ipv4_netmask">
+                            <regex>\\d+</regex>
+                            <named>true</named>
+                            <start>15</start>
+                            <end>16</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name="\w+">one or more word characters</item>
+                                <item name="([-+]?\d+\.?\d*([eE][-+]?\d+)?)">one complex decimal number</item>
+                                <item name="\d+">one or more digits</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor2">
+                            <regex>\\s+</regex>
+                            <start>16</start>
+                            <end>17</end>
+                        </item>
+                    </groups>
+                    <sampleMatch>inet 127.0.0.1/8 </sampleMatch>
+                    <regexMapMode>Line</regexMapMode>
+                </item>
+                <item name="ipv6">
+                    <groups>
+                        <item name="anchor0">
+                            <regex>inet\\d+\\s+</regex>
+                            <start>0</start>
+                            <end>6</end>
+                        </item>
+                        <item name="ipv6_address">
+                            <regex>\\S+</regex>
+                            <named>true</named>
+                            <start>6</start>
+                            <end>31</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name=".{25}">exactly 25 of any character</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor1">
+                            <regex>/</regex>
+                            <start>31</start>
+                            <end>32</end>
+                        </item>
+                        <item name="ipv6_prefix">
+                            <regex>\\d+</regex>
+                            <named>true</named>
+                            <start>32</start>
+                            <end>34</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name="\w+">one or more word characters</item>
+                                <item name="([-+]?\d+\.?\d*([eE][-+]?\d+)?)">one complex decimal number</item>
+                                <item name="\d+">one or more digits</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor2">
+                            <regex>\\s+</regex>
+                            <start>34</start>
+                            <end>35</end>
+                        </item>
+                    </groups>
+                    <sampleMatch>inet6 fe80::1acb:a58c:7c33:366d/64 </sampleMatch>
+                    <regexMapMode>Line</regexMapMode>
+                </item>
+            </regexMaps>
+        </item>
+    </mapperProperties>
+    <applicabilityProperties actionType="command" command="ip a l"/>
+    <aliases>
+        <item name="countIPv4">
+            <queryFormatString>count(//ipv4_address)</queryFormatString>
+        </item>
+        <item name="countIPv6">
+            <queryFormatString>count(//ipv6_address)</queryFormatString>
+        </item>
+        <item name="countInterfaces">
+            <queryFormatString>count(//interfaceName)</queryFormatString>
+        </item>
+    </aliases>
+</ResponseMap>
