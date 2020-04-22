@@ -70,7 +70,7 @@
                 </item>
                 <item guid="b87c7a4b-9126-4448-80ac-00b5afe513e5" action="command" session="s1" responseMap="project://easyTest/response_maps/lsb_release_-a.ffrm" useResponseMapLibraryApplicability="false">
                     <command>
-                        <body>lsb_release -a</body>
+                        <body>lsb_release -a </body>
                     </command>
                     <postProcessing>
                         <analysisRules>
